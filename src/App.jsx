@@ -11,7 +11,7 @@ import './App.css'
 function App() {
   return (
     <LightboxProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <div className="app">
           <Header />
           <main className="main">

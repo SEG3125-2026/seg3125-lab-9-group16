@@ -59,14 +59,22 @@ npm run preview
 
 ---
 
-## Deploy to Vercel
+## Deploy
+
+### GitHub Pages (auto-deploys on push to main)
+
+The workflow builds the app and deploys to GitHub Pages. After pushing:
+
+1. Go to **Settings → Pages** in the repo
+2. Under "Build and deployment", set **Source** to "GitHub Actions"
+3. The site will be at: `https://seg3125-2026.github.io/seg3125-lab-8-team-16/`
+
+### Vercel
 
 1. Push this repo to GitHub
 2. Go to [vercel.com](https://vercel.com) → Import project
 3. Select the repo, leave defaults, Deploy
 4. Your site will be at `https://your-project.vercel.app`
-
-**Note:** For client-side routing, Vercel serves `index.html` for all routes by default with Vite projects.
 
 ---
 
