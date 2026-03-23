@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useDocuments } from '../hooks/useDocuments'
 import { useLightbox } from '../context/LightboxContext'
 
 export default function BrowsePage() {
+  const { t } = useTranslation()
   const documents = useDocuments()
   const { openLightbox } = useLightbox()
 
@@ -14,7 +16,7 @@ export default function BrowsePage() {
 
   return (
     <section className="page">
-      <h2>Browse Collection</h2>
+      <h2>{t('browse.title')}</h2>
       <div className="browse-list">
         {documents.map((doc) => (
           <Link key={doc.id} to={`/document/${doc.slug}`} className="browse-item">
@@ -25,7 +27,7 @@ export default function BrowsePage() {
               role="button"
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && handleImageClick(e, doc)}
-              title="Click to enlarge"
+              title={t('common.clickToEnlarge')}
             />
             <div className="browse-item-content">
               <h3>{doc.title}</h3>

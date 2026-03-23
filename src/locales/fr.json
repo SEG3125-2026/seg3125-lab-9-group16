@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "browse": "Parcourir",
+    "help": "Aide",
+    "logo": "Archives du patrimoine"
+  },
+  "home": {
+    "title": "Art et histoire canadienne",
+    "subtitle": "Explorez les collections des musées du Canada — photographies, peintures et artefacts culturels avec descriptions audio.",
+    "browseBtn": "Parcourir la collection"
+  },
+  "browse": {
+    "title": "Parcourir la collection"
+  },
+  "document": {
+    "backToBrowse": "← Retour au parcours",
+    "audioLabel": "Écouter la description audio",
+    "audioUnsupported": "Votre navigateur ne prend pas en charge l'élément audio.",
+    "comments": "Commentaires",
+    "sharePlaceholder": "Partagez vos réflexions...",
+    "postComment": "Publier le commentaire",
+    "emptyComments": "Aucun commentaire pour le moment. Soyez le premier à partager vos réflexions!",
+    "notFound": "Document introuvable."
+  },
+  "help": {
+    "title": "Aide et FAQ",
+    "howToUse": "Comment utiliser ce site",
+    "browse": "Parcourir",
+    "browseDesc": "— Consultez toutes les œuvres de la collection. Cliquez sur un élément pour voir les détails.",
+    "listen": "Écouter",
+    "listenDesc": "— Chaque élément a une description audio. Utilisez le lecteur pour entendre la narration.",
+    "comment": "Commenter",
+    "commentDesc": "— Partagez vos réflexions sur chaque œuvre. Les commentaires sont stockés dans la base de données.",
+    "zoom": "Zoom",
+    "zoomDesc": "— Cliquez sur une image pour l'ouvrir dans une visionneuse et zoomer.",
+    "needHelp": "Besoin d'aide?",
+    "contact": "Contactez votre TA de cours ou visitez la page du cours SEG3125."
+  },
+  "footer": {
+    "lab": "SEG3125 Lab 9",
+    "team": "Eknoor, Pierre, Zaid"
+  },
+  "lightbox": {
+    "close": "Fermer",
+    "zoomOut": "Dézoomer",
+    "zoomIn": "Zoomer"
+  },
+  "common": {
+    "clickToEnlarge": "Cliquez pour agrandir"
+  }
+}

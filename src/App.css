@@ -48,6 +48,28 @@
   color: var(--color-primary);
 }
 
+.lang-select {
+  margin-left: 1.5rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.lang-select:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.comment-error {
+  color: #c53030;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
 .main {
   flex: 1;
   padding: 2rem;

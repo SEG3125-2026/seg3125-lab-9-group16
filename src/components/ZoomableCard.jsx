@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useLightbox } from '../context/LightboxContext'
 
 export default function ZoomableCard({ doc }) {
+  const { t } = useTranslation()
   const { openLightbox } = useLightbox()
 
   const handleImageClick = (e) => {
@@ -19,7 +21,7 @@ export default function ZoomableCard({ doc }) {
         role="button"
         tabIndex={0}
         onKeyDown={(e) => e.key === 'Enter' && handleImageClick(e)}
-        title="Click to enlarge"
+        title={t('common.clickToEnlarge')}
       />
       <div className="card-content">
         <span className="card-museum">{doc.museum}</span>

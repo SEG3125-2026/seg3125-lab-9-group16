@@ -1,5 +1,5 @@
 {
-  "name": "seg3125-lab8-website-implementation",
+  "name": "seg3125-lab9-website-implementation",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,14 +7,22 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node server/index.js",
+    "dev:full": "concurrently \"npm run server\" \"npm run dev\""
   },
   "dependencies": {
+    "better-sqlite3": "^11.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "i18next": "^24.2.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-i18next": "^15.1.0",
     "react-router-dom": "^7.13.1"
   },
   "devDependencies": {
+    "concurrently": "^9.1.0",
     "@eslint/js": "^9.39.4",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

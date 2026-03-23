@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "Home",
+    "browse": "Browse",
+    "help": "Help",
+    "logo": "Heritage Archive"
+  },
+  "home": {
+    "title": "Canadian Art & History",
+    "subtitle": "Explore museum collections from across Canada — photographs, paintings, and cultural artifacts with audio descriptions.",
+    "browseBtn": "Browse Collection"
+  },
+  "browse": {
+    "title": "Browse Collection"
+  },
+  "document": {
+    "backToBrowse": "← Back to Browse",
+    "audioLabel": "Listen to audio description",
+    "audioUnsupported": "Your browser does not support the audio element.",
+    "comments": "Comments",
+    "sharePlaceholder": "Share your thoughts...",
+    "postComment": "Post Comment",
+    "emptyComments": "No comments yet. Be the first to share your thoughts!",
+    "notFound": "Document not found."
+  },
+  "help": {
+    "title": "Help & FAQ",
+    "howToUse": "How to use this site",
+    "browse": "Browse",
+    "browseDesc": "— View all artworks in the collection. Click any item to see details.",
+    "listen": "Listen",
+    "listenDesc": "— Each item has an audio description. Use the player to hear the narration.",
+    "comment": "Comment",
+    "commentDesc": "— Share your thoughts on each artwork. Comments are stored in the database.",
+    "zoom": "Zoom",
+    "zoomDesc": "— Click any image to open it in a lightbox and zoom in or out.",
+    "needHelp": "Need more help?",
+    "contact": "Contact your course TA or visit the SEG3125 course page."
+  },
+  "footer": {
+    "lab": "SEG3125 Lab 9",
+    "team": "Eknoor, Pierre, Zaid"
+  },
+  "lightbox": {
+    "close": "Close",
+    "zoomOut": "Zoom out",
+    "zoomIn": "Zoom in"
+  },
+  "common": {
+    "clickToEnlarge": "Click to enlarge"
+  }
+}

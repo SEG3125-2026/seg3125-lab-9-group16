@@ -1,47 +1,91 @@
-# Heritage Archive – Lab 8 (React Implementation)
+# Heritage Archive – Lab 9 (Complete Implementation)
 
 **Team 16:** Eknoor, Pierre, Zaid  
-**Lab 7 Design:** https://github.com/SEG3125-2026/seg3125-lab-7-team-16
+**Lab 7 Design:** https://github.com/SEG3125-2026/seg3125-lab-7-team-16  
+**Lab 8:** https://github.com/SEG3125-2026/seg3125-lab-8-team-16
 
 ---
 
-## Overview
+## Lab 9 Additions
 
-This is the **Lab 8** React implementation of the Heritage Archive website designed in Lab 7. It features Canadian art and history from museum collections.
+- **Bilingual (English / French)** – Language selector in header; all UI strings translated
+- **SQL Database** – Comments stored in SQLite; backend API at `http://localhost:3001`
+- **Usability heuristics** – Design follows Lab 7 heuristics
 
-### Features
+---
 
-- **Landing page** – Hero section + featured artworks
-- **Browse** – List of all documents (The Battle, The Devil, The Pianist)
-- **Document detail** – Image (click to zoom), metadata, audio player, comments
-- **Help** – FAQ and usage instructions
-- **Image lightbox** – Click any image to open and zoom (50%–300%)
+## Features
 
-### Human Interactive Processes (from Lab 7)
-
-1. **Following instructions** – Clear navigation and CTAs
-2. **Exploring** – Browse collection, featured cards
-3. **Absorbing information** – Images, metadata, audio descriptions
-4. **Communicating** – Comment section on each artwork
+- Landing page – Hero section + featured artworks
+- Browse – List of all documents (The Battle, The Devil, The Pianist)
+- Document detail – Image (click to zoom), metadata, audio player, comments (SQL)
+- Help – FAQ and usage instructions
+- Image lightbox – Zoom 50%–300%
+- Language selector – English / Français
 
 ---
 
 ## Tech Stack
 
-- **React 19** + Vite
-- **React Router** v7
-- Comments stored in **localStorage** (database in Lab 9)
+- React 19 + Vite + React Router
+- react-i18next (internationalization)
+- Express + SQLite (better-sqlite3) for comments API
+- CORS enabled for local development
 
 ---
 
 ## Run Locally
 
+**1. Install dependencies**
 ```bash
 npm install
+```
+
+**2. Start both backend and frontend**
+```bash
+npm run dev:full
+```
+
+This starts:
+- **API server** at http://localhost:3001 (SQLite database)
+- **Frontend** at http://localhost:5173
+
+**3. Open** http://localhost:5173
+
+---
+
+## Run Separately (optional)
+
+**Terminal 1 – Backend:**
+```bash
+npm run server
+```
+
+**Terminal 2 – Frontend:**
+```bash
 npm run dev
 ```
 
-Open http://localhost:5173
+---
+
+## Database
+
+SQLite database file: `server/heritage.db`
+
+**Schema:**
+```sql
+CREATE TABLE comments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  document_id TEXT NOT NULL,
+  author TEXT DEFAULT 'Anonymous',
+  text TEXT NOT NULL,
+  created_at TEXT DEFAULT (datetime('now'))
+);
+```
+
+**API:**
+- `GET /api/comments/:docId` – List comments for a document
+- `POST /api/comments` – Add a comment (`{ document_id, text, author? }`)
 
 ---
 
@@ -51,30 +95,14 @@ Open http://localhost:5173
 npm run build
 ```
 
-Output in `dist/`. Serve with:
-
-```bash
-npm run preview
-```
+Output in `dist/`. For production you’d also need to run the API server (or deploy it separately).
 
 ---
 
 ## Deploy
 
-### GitHub Pages (auto-deploys on push to main)
-
-The workflow builds the app and deploys to GitHub Pages. After pushing:
-
-1. Go to **Settings → Pages** in the repo
-2. Under "Build and deployment", set **Source** to "GitHub Actions"
-3. The site will be at: `https://seg3125-2026.github.io/seg3125-lab-8-team-16/`
-
-### Vercel
-
-1. Push this repo to GitHub
-2. Go to [vercel.com](https://vercel.com) → Import project
-3. Select the repo, leave defaults, Deploy
-4. Your site will be at `https://your-project.vercel.app`
+- **Frontend:** Push to GitHub; use Vercel or GitHub Pages for the React app.
+- **Backend:** The API must run separately (e.g. Railway, Render, or a VPS). For Lab 9 submission, the video should show the app running locally with the SQL database.
 
 ---
 
@@ -82,14 +110,45 @@ The workflow builds the app and deploys to GitHub Pages. After pushing:
 
 ```
 src/
-├── components/     # Header, Lightbox, ZoomableImage, ZoomableCard
-├── context/        # LightboxContext
-├── hooks/          # useDocuments
-├── pages/          # HomePage, BrowsePage, DocumentPage, HelpPage
-├── App.jsx
-└── main.jsx
-public/
-└── data/
-    └── config.json # Document list and asset URLs
+├── components/     Header, Lightbox, ZoomableImage, ZoomableCard, LanguageSelector
+├── context/        LightboxContext
+├── hooks/          useDocuments
+├── pages/          HomePage, BrowsePage, DocumentPage, HelpPage
+├── locales/        en.json, fr.json
+├── i18n.js         i18n config
+└── ...
+server/
+├── index.js        Express API
+├── db.js           SQLite setup + queries
+└── heritage.db     (created on first run)
 ```
 
+---
+
+## Heuristics for Video (10 usability heuristics)
+
+For the 10–15 min video, your teammate can point to these UI elements:
+
+| # | Heuristic | Where to show it |
+|---|-----------|------------------|
+| 1 | Visibility of system status | Loading states, form feedback, comment posting ("Posting...") |
+| 2 | Match system & real world | Familiar terms: Home, Browse, Help, Comments, "Share your thoughts" |
+| 3 | User control & freedom | Back links, lightbox Close, language selector |
+| 4 | Consistency & standards | Nav layout, button styles, form patterns |
+| 5 | Error prevention | Required fields, validation, disabled states during submit |
+| 6 | Recognition over recall | Labels on all actions, visible nav, tooltips (e.g. "Click to enlarge") |
+| 7 | Flexibility & efficiency | Language selector, keyboard (Enter on images, form submit) |
+| 8 | Aesthetic & minimal design | Clean layout, no clutter, focused content |
+| 9 | Help users recognize errors | Comment error messages, "Document not found" |
+| 10 | Help & documentation | Help page with FAQ and usage instructions |
+
+---
+
+## Submission Checklist (Lab 9)
+
+- [x] Complete Lab 8 implementation
+- [x] Bilingual (English + French)
+- [x] SQL database for comments
+- [x] Usability heuristics
+- [ ] Video (10–15 min) – teammate
+- [ ] PDF with GitHub link + video link

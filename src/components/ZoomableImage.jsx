@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next'
 import { useLightbox } from '../context/LightboxContext'
 
 export default function ZoomableImage({ src, alt, className, style }) {
+  const { t } = useTranslation()
   const { openLightbox } = useLightbox()
 
   const handleClick = (e) => {
@@ -19,7 +21,7 @@ export default function ZoomableImage({ src, alt, className, style }) {
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && handleClick(e)}
-      title="Click to enlarge"
+      title={t('common.clickToEnlarge')}
     />
   )
 }

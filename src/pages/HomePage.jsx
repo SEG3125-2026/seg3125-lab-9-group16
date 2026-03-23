@@ -1,18 +1,20 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useDocuments } from '../hooks/useDocuments'
 import ZoomableCard from '../components/ZoomableCard'
 
 export default function HomePage() {
+  const { t } = useTranslation()
   const documents = useDocuments()
 
   return (
     <section className="page">
       <div className="hero">
-        <h1>Canadian Art & History</h1>
+        <h1>{t('home.title')}</h1>
         <p className="hero-subtitle">
-          Explore museum collections from across Canada — photographs, paintings, and cultural artifacts with audio descriptions.
+          {t('home.subtitle')}
         </p>
-        <Link to="/browse" className="btn btn-primary">Browse Collection</Link>
+        <Link to="/browse" className="btn btn-primary">{t('home.browseBtn')}</Link>
       </div>
       <div className="featured-grid">
         {documents.map((doc) => (
