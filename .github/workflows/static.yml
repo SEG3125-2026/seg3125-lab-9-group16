@@ -38,11 +38,7 @@ jobs:
           cache: 'npm'
       - name: Install and build
         env:
-<<<<<<< HEAD
-          VITE_BASE_PATH: '/seg3125-lab-9-group16/'
-=======
-          VITE_BASE_PATH: '/seg3125-lab-9-team-16/'
->>>>>>> 3967c659c6e6e29f9bac3456489589c674456432
+        VITE_BASE_PATH: '/seg3125-lab-9-team-16/'
         run: |
           npm ci
           npm run build
