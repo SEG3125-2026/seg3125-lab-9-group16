@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-
-const CONFIG_URL = '/data/config.json'
+import { resolvePublicUrl } from '../utils/documentLocale'
 
 const FALLBACK = [
   {
@@ -51,7 +50,7 @@ export function useDocuments() {
   const [documents, setDocuments] = useState([])
 
   useEffect(() => {
-    fetch(CONFIG_URL)
+    fetch(resolvePublicUrl('/data/config.json'))
       .then((res) => res.json())
       .then((data) => setDocuments(data.documents || FALLBACK))
       .catch(() => setDocuments(FALLBACK))

@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useDocuments } from '../hooks/useDocuments'
 import ZoomableImage from '../components/ZoomableImage'
-import { pickLocalized } from '../utils/documentLocale'
+import { pickLocalized, resolvePublicUrl } from '../utils/documentLocale'
 
 const API_BASE = '/api'
 
@@ -81,7 +81,7 @@ export default function DocumentPage() {
   useEffect(() => {
     if (!doc) return
     const { dataUrl } = pickLocalized(doc, i18n.language)
-    fetch(dataUrl)
+    fetch(resolvePublicUrl(dataUrl))
       .then((res) => res.json())
       .then(setMeta)
       .catch(() => setMeta({}))
