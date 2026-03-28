@@ -16,6 +16,9 @@
   "document": {
     "backToBrowse": "← Retour au parcours",
     "audioLabel": "Écouter la description audio",
+    "audioLabelFrTts": "Narration française (lecture à voix haute du texte ci-dessous)",
+    "listenFrenchNarration": "Lire la narration française",
+    "stopFrenchNarration": "Arrêter",
     "audioUnsupported": "Votre navigateur ne prend pas en charge l'élément audio.",
     "comments": "Commentaires",
     "sharePlaceholder": "Partagez vos réflexions...",

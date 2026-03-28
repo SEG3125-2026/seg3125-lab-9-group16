@@ -16,6 +16,9 @@
   "document": {
     "backToBrowse": "← Back to Browse",
     "audioLabel": "Listen to audio description",
+    "audioLabelFrTts": "French narration (voice reads the text below)",
+    "listenFrenchNarration": "Play French narration",
+    "stopFrenchNarration": "Stop",
     "audioUnsupported": "Your browser does not support the audio element.",
     "comments": "Comments",
     "sharePlaceholder": "Share your thoughts...",

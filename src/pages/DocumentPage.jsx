@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useDocuments } from '../hooks/useDocuments'
 import ZoomableImage from '../components/ZoomableImage'
+import { pickLocalized } from '../utils/documentLocale'
 
 const API_BASE = '/api'
 
@@ -23,7 +24,7 @@ async function postComment(docId, text) {
 }
 
 function buildMetaFields(meta) {
-  const skip = ['title', 'description', 'catalogue_description', 'scope_and_content', 'related_material', 'subjects']
+  const skip = ['title', 'description', 'catalogue_description', 'scope_and_content', 'related_material', 'subjects', 'spoken_narration_fr']
   return Object.entries(meta)
     .filter(([key, value]) => !skip.includes(key) && value != null && value !== '')
     .filter(([, value]) => (Array.isArray(value) ? value.join(', ') : String(value)).length <= 200)
@@ -36,7 +37,7 @@ function buildMetaFields(meta) {
 }
 
 export default function DocumentPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { slug } = useParams()
   const documents = useDocuments()
   const doc = documents.find((d) => d.slug === slug)
@@ -46,17 +47,57 @@ export default function DocumentPage() {
   const [comments, setComments] = useState([])
   const [commentError, setCommentError] = useState(null)
   const [posting, setPosting] = useState(false)
+  const [ttsPlaying, setTtsPlaying] = useState(false)
+
+  const stopFrenchTts = useCallback(() => {
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel()
+    }
+    setTtsPlaying(false)
+  }, [])
+
+  const toggleFrenchTts = useCallback((text) => {
+    if (!text || typeof window === 'undefined' || !window.speechSynthesis) return
+    if (ttsPlaying) {
+      stopFrenchTts()
+      return
+    }
+    window.speechSynthesis.cancel()
+    const u = new SpeechSynthesisUtterance(text)
+    u.lang = 'fr-CA'
+    u.onend = () => setTtsPlaying(false)
+    u.onerror = () => setTtsPlaying(false)
+    window.speechSynthesis.speak(u)
+    setTtsPlaying(true)
+  }, [ttsPlaying, stopFrenchTts])
 
   useEffect(() => {
     if (!doc) return
     fetchComments(doc.id)
       .then(setComments)
       .catch(() => setComments([]))
-    fetch(doc.data)
+  }, [doc])
+
+  useEffect(() => {
+    if (!doc) return
+    const { dataUrl } = pickLocalized(doc, i18n.language)
+    fetch(dataUrl)
       .then((res) => res.json())
       .then(setMeta)
       .catch(() => setMeta({}))
-  }, [doc])
+  }, [doc, i18n.language])
+
+  useEffect(() => {
+    stopFrenchTts()
+  }, [i18n.language, stopFrenchTts])
+
+  useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && window.speechSynthesis) {
+        window.speechSynthesis.cancel()
+      }
+    }
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -78,6 +119,9 @@ export default function DocumentPage() {
 
   if (!doc) return <p className="error-message">{t('document.notFound')}</p>
 
+  const loc = pickLocalized(doc, i18n.language)
+  const isFr = i18n.language.startsWith('fr')
+  const useFrTts = isFr && meta?.spoken_narration_fr && !doc.audio_fr
   const description = meta?.catalogue_description || meta?.related_material || meta?.description || meta?.scope_and_content || ''
   const metaFields = meta ? buildMetaFields(meta) : []
 
@@ -86,19 +130,38 @@ export default function DocumentPage() {
       <Link to="/browse" className="back-link">{t('document.backToBrowse')}</Link>
       <div className="document-content">
         <div className="document-image-wrap">
-          <ZoomableImage src={doc.image} alt={doc.title} className="document-img" />
+          <ZoomableImage src={doc.image} alt={loc.title} className="document-img" />
         </div>
         <div className="document-body">
-          <h2>{doc.title}</h2>
-          <p className="document-meta">{doc.museum}</p>
+          <h2>{loc.title}</h2>
+          <p className="document-meta">{loc.museum}</p>
+          {doc.subtitle && (
+            <p className="document-subtitle">{isFr && doc.subtitle_fr ? doc.subtitle_fr : doc.subtitle}</p>
+          )}
           {description && <div className="document-description">{description}</div>}
           {metaFields.length > 0 && <div className="document-meta-grid">{metaFields}</div>}
           <div className="audio-section">
-            <h4>{t('document.audioLabel')}</h4>
-            <audio controls preload="metadata">
-              <source src={doc.audio} type="audio/mpeg" />
-              {t('document.audioUnsupported')}
-            </audio>
+            {useFrTts ? (
+              <>
+                <h4>{t('document.audioLabelFrTts')}</h4>
+                <p className="document-narration-fr">{meta.spoken_narration_fr}</p>
+                <button
+                  type="button"
+                  className="btn btn-primary tts-btn"
+                  onClick={() => toggleFrenchTts(meta.spoken_narration_fr)}
+                >
+                  {ttsPlaying ? t('document.stopFrenchNarration') : t('document.listenFrenchNarration')}
+                </button>
+              </>
+            ) : (
+              <>
+                <h4>{t('document.audioLabel')}</h4>
+                <audio controls preload="metadata">
+                  <source src={loc.audioUrl} type="audio/mpeg" />
+                  {t('document.audioUnsupported')}
+                </audio>
+              </>
+            )}
           </div>
         </div>
       </div>

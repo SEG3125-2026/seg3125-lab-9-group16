@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useLightbox } from '../context/LightboxContext'
+import { pickLocalized } from '../utils/documentLocale'
 
 export default function ZoomableCard({ doc }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const loc = pickLocalized(doc, i18n.language)
   const { openLightbox } = useLightbox()
 
   const handleImageClick = (e) => {
@@ -24,8 +26,8 @@ export default function ZoomableCard({ doc }) {
         title={t('common.clickToEnlarge')}
       />
       <div className="card-content">
-        <span className="card-museum">{doc.museum}</span>
-        <h3>{doc.title}</h3>
+        <span className="card-museum">{loc.museum}</span>
+        <h3>{loc.title}</h3>
       </div>
     </Link>
   )

@@ -1,10 +1,50 @@
 import { useState, useEffect } from 'react'
 
 const CONFIG_URL = '/data/config.json'
+
 const FALLBACK = [
-  { id: 'theBattle', slug: 'the-battle', title: '29th Infantry Battalion at Vimy Ridge', museum: 'Canadian War Museum', image: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theBattle/image.png', audio: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theBattle/audiobook.mp3', data: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theBattle/data.json' },
-  { id: 'theDevil', slug: 'the-devil', title: 'The Devil (Taro Series XV)', museum: 'Ottawa Art Gallery', image: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theDevil/image.png', audio: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theDevil/audiobook.mp3', data: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theDevil/data.json' },
-  { id: 'thePianist', slug: 'the-pianist', title: 'The Pianist', museum: 'National Gallery of Canada', image: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/thePianist/image.png', audio: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/thePianist/audiobook.mp3', data: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/thePianist/data.json' }
+  {
+    id: 'theBattle',
+    slug: 'the-battle',
+    title: '29th Infantry Battalion at Vimy Ridge',
+    title_fr: "29e Bataillon d'infanterie à la crête de Vimy",
+    subtitle: 'Battle of Vimy Ridge, 1917',
+    subtitle_fr: 'Bataille de la crête de Vimy, 1917',
+    image: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theBattle/image.png',
+    audio: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theBattle/audiobook.mp3',
+    data: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theBattle/data.json',
+    data_fr: '/documents/theBattle/data.fr.json',
+    museum: 'Canadian War Museum',
+    museum_fr: 'Musée canadien de la guerre',
+  },
+  {
+    id: 'theDevil',
+    slug: 'the-devil',
+    title: 'The Devil (Taro Series XV)',
+    title_fr: 'Le Diable (série Taro XV)',
+    subtitle: 'Maxwell Bates, 1969',
+    subtitle_fr: 'Maxwell Bates, 1969',
+    image: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theDevil/image.png',
+    audio: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theDevil/audiobook.mp3',
+    data: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/theDevil/data.json',
+    data_fr: '/documents/theDevil/data.fr.json',
+    museum: 'Ottawa Art Gallery',
+    museum_fr: "Galerie d'art d'Ottawa",
+  },
+  {
+    id: 'thePianist',
+    slug: 'the-pianist',
+    title: 'The Pianist',
+    title_fr: 'Le Pianiste',
+    subtitle: 'Liubov Popova, 1915',
+    subtitle_fr: 'Lioubov Popova, 1915',
+    image: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/thePianist/image.png',
+    audio: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/thePianist/audiobook.mp3',
+    data: 'https://raw.githubusercontent.com/SEG3125-2026/seg3125-lab-7-team-16/main/documents/thePianist/data.json',
+    data_fr: '/documents/thePianist/data.fr.json',
+    museum: 'National Gallery of Canada',
+    museum_fr: 'Musée des beaux-arts du Canada',
+  },
 ]
 
 export function useDocuments() {

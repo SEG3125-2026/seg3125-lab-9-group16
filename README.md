@@ -8,7 +8,7 @@
 
 ## Lab 9 Additions
 
-- **Bilingual (English / French)** – Language selector in header; all UI strings translated
+- **Bilingual (English / French)** – Language selector in header; UI strings translated; each document has French `data.fr.json` (metadata + description). In French mode, **narration** uses the browser’s text-to-speech (Synthèse vocale, `fr-CA`) on the French script in each data file—optional real `audio_fr` MP3 paths can be added in `config.json` later if you replace the files under `public/documents/*/`.
 - **SQL Database** – Comments stored in SQLite; backend API at `http://localhost:3001`
 - **Usability heuristics** – Design follows Lab 7 heuristics
 
