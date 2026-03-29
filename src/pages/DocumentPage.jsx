@@ -3,23 +3,25 @@ import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useDocuments } from '../hooks/useDocuments'
 import ZoomableImage from '../components/ZoomableImage'
-import { pickLocalized, resolvePublicUrl } from '../utils/documentLocale'
-
-const API_BASE = '/api'
+import { pickLocalized, resolvePublicUrl, getApiBase } from '../utils/documentLocale'
+import { loadLocalComments, saveLocalComment } from '../utils/commentStorage'
 
 async function fetchComments(docId) {
-  const res = await fetch(`${API_BASE}/comments/${docId}`)
-  if (!res.ok) return []
+  const res = await fetch(`${getApiBase()}/comments/${docId}`)
+  if (!res.ok) throw new Error('api')
   return res.json()
 }
 
 async function postComment(docId, text) {
-  const res = await fetch(`${API_BASE}/comments`, {
+  const res = await fetch(`${getApiBase()}/comments`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ document_id: docId, text, author: 'Anonymous' }),
   })
-  if (!res.ok) throw new Error('Failed to post comment')
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body.error || `HTTP ${res.status}`)
+  }
   return res.json()
 }
 
@@ -46,6 +48,8 @@ export default function DocumentPage() {
   const [commentText, setCommentText] = useState('')
   const [comments, setComments] = useState([])
   const [commentError, setCommentError] = useState(null)
+  const [commentsOffline, setCommentsOffline] = useState(false)
+  const [commentNotice, setCommentNotice] = useState(null)
   const [posting, setPosting] = useState(false)
   const [ttsPlaying, setTtsPlaying] = useState(false)
 
@@ -73,9 +77,22 @@ export default function DocumentPage() {
 
   useEffect(() => {
     if (!doc) return
-    fetchComments(doc.id)
-      .then(setComments)
-      .catch(() => setComments([]))
+    let cancelled = false
+    ;(async () => {
+      try {
+        const data = await fetchComments(doc.id)
+        if (!cancelled) {
+          setComments(data)
+          setCommentsOffline(false)
+        }
+      } catch {
+        if (!cancelled) {
+          setComments(loadLocalComments(doc.id))
+          setCommentsOffline(true)
+        }
+      }
+    })()
+    return () => { cancelled = true }
   }, [doc])
 
   useEffect(() => {
@@ -105,13 +122,24 @@ export default function DocumentPage() {
     if (!text || !doc || posting) return
     setPosting(true)
     setCommentError(null)
+    setCommentNotice(null)
     try {
       await postComment(doc.id, text)
       setCommentText('')
-      const updated = await fetchComments(doc.id)
-      setComments(updated)
-    } catch (err) {
-      setCommentError(err.message)
+      try {
+        const updated = await fetchComments(doc.id)
+        setComments(updated)
+        setCommentsOffline(false)
+      } catch {
+        setComments(loadLocalComments(doc.id))
+        setCommentsOffline(true)
+      }
+    } catch {
+      saveLocalComment(doc.id, text)
+      setCommentText('')
+      setComments(loadLocalComments(doc.id))
+      setCommentsOffline(true)
+      setCommentNotice(t('document.commentSavedLocalOnly'))
     } finally {
       setPosting(false)
     }
@@ -167,6 +195,14 @@ export default function DocumentPage() {
       </div>
       <div className="comments-section">
         <h3>{t('document.comments')}</h3>
+        {commentsOffline && (
+          <p className="comments-offline-banner" role="status">
+            {t('document.commentsOfflineBanner')}
+          </p>
+        )}
+        {commentNotice && (
+          <p className="comment-notice" role="status">{commentNotice}</p>
+        )}
         <form onSubmit={handleSubmit} className="comment-form">
           <textarea
             value={commentText}

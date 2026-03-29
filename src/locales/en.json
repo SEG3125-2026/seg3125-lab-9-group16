@@ -24,7 +24,9 @@
     "sharePlaceholder": "Share your thoughts...",
     "postComment": "Post Comment",
     "emptyComments": "No comments yet. Be the first to share your thoughts!",
-    "notFound": "Document not found."
+    "notFound": "Document not found.",
+    "commentsOfflineBanner": "No connection to the SQL backend. Comments may only show from this browser. Run npm run dev:full (or npm run server while using npm run dev) so posts go to SQLite at server/heritage.db.",
+    "commentSavedLocalOnly": "Saved in this browser only. Start the API with npm run server (use npm run dev:full for both) to store comments in the SQLite database."
   },
   "help": {
     "title": "Help & FAQ",

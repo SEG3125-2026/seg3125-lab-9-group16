@@ -33,7 +33,7 @@
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--colo9r-primary)99899998998;
   text-decoration: none;
 }
 
@@ -351,6 +351,27 @@
   font-family: var(--font-display);
   font-size: 1.25rem;
   margin: 0 0 1rem;
+}
+
+.comments-offline-banner,
+.comment-notice {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.comments-offline-banner {
+  background: #fff8e6;
+  border: 1px solid #e6d08c;
+  color: #5c4a1a;
+}
+
+.comment-notice {
+  background: #e8f4ef;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary-hover);
 }
 
 .comment-form textarea {

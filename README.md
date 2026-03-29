@@ -103,6 +103,7 @@ Output in `dist/`. For production you’d also need to run the API server (or de
 
 - **Frontend:** Push to GitHub; use Vercel or GitHub Pages for the React app.
 - **Backend:** The API must run separately (e.g. Railway, Render, or a VPS). For Lab 9 submission, the video should show the app running locally with the SQL database.
+- **Comments / SQL demo:** Run **`npm run dev:full`** so Vite and the Express API (port 3001) both start. Comments are stored in **`server/heritage.db`** (SQLite). If you only open the GitHub Pages site or run `npm run dev` without the server, comments fall back to the browser and a yellow notice explains that the database is offline.
 
 ---
 

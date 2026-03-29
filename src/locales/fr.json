@@ -24,7 +24,9 @@
     "sharePlaceholder": "Partagez vos réflexions...",
     "postComment": "Publier le commentaire",
     "emptyComments": "Aucun commentaire pour le moment. Soyez le premier à partager vos réflexions!",
-    "notFound": "Document introuvable."
+    "notFound": "Document introuvable.",
+    "commentsOfflineBanner": "Pas de connexion au serveur SQL — les commentaires peuvent venir uniquement de ce navigateur. Lancez npm run dev:full (ou npm run server avec npm run dev) pour enregistrer dans SQLite (server/heritage.db).",
+    "commentSavedLocalOnly": "Enregistré seulement dans ce navigateur. Démarrez l’API avec npm run server (ou npm run dev:full) pour utiliser la base SQLite."
   },
   "help": {
     "title": "Aide et FAQ",

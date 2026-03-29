@@ -3,6 +3,12 @@
  * On GitHub Pages the app lives under import.meta.env.BASE_URL, so absolute
  * paths from the domain root 404 unless prefixed.
  */
+/** API routes follow the same base path as the SPA (GitHub Pages subpath). */
+export function getApiBase() {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '')
+  return `${base}/api`
+}
+
 export function resolvePublicUrl(pathOrUrl) {
   if (!pathOrUrl) return pathOrUrl
   if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl
